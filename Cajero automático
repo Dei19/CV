@@ -1,0 +1,90 @@
+usuarioC = input("\nCree su usuario\n\nRequisitos\n1.debe tener mas de 4 caracteres\n")
+claveC = ""
+saldo = 1000
+iniciar = True
+sesion = False
+
+def validarcrearcontraseña(contraseña):
+  if len(contraseña) < 8:
+    print("\nla contraseña tiene que ser mas larga\n\nrequistos\n1.debe tener mas de 8 caracteres\n\n")
+  else:
+    print("\nUsuario y contrañesa creada correctamente")
+
+def crearusuario():
+  global claveC
+  global usuarioC
+  if len(usuarioC) < 4:
+    print("\nla usuario tiene que ser mas largo\n\nrequistos:\n1.debe tener mas de 4 caracteres\n\n")
+  else:
+    print("\nUsuario creado correctamente")
+    claveC = input("\nCree su contraseña\n\nRequisitos:\n1.debe tener mas de 8 caracteres\n")
+    return validarcrearcontraseña(claveC)
+
+def validarUsuario(usuario, clave):
+  global sesion
+  if usuario == usuarioC and clave == claveC:
+    sesion = True
+    return True
+  return False
+
+def login():
+  global sesion
+  if (sesion) :
+    return True
+  usuario = input("Digite usuario: ")
+  clave = input("Digite contraseña: ")
+  return validarUsuario(usuario, clave)
+
+def retirar(valor):
+  if valor > saldo:
+    return False, saldo
+  saldo - valor
+  return True, saldo - valor
+
+def depositar(valor):
+  global saldo
+  saldo = saldo + valor
+  return True, saldo
+
+def consultarSaldo():
+  return True, saldo
+
+def accion(opcion):
+  if opcion == 1:
+    valor = int(input("Digite el valor a consignar: "))
+    return depositar(valor)
+
+  if opcion == 2:
+    valor = int(input("Digite el valor a retirar: "))
+    return retirar(valor)
+  if opcion == 3:
+    return consultarSaldo()
+
+  return False, saldo
+
+def ejecutarcrearcuenta():
+  crearusuario()
+
+def ejecutar():
+   if not login():
+     print("usuario o contraseña inválido")
+     return
+   print("¿Qué desea hacer?")
+   opcion = int(input("1.Consignar 2.Retirar 3.Consultar\n"))
+  
+   ok, saldo = accion(opcion)
+   if not ok:
+     print("No se realizó la acción, saldo:", saldo)
+   else:
+     print("Acción realizada correctamente, saldo: ", saldo)
+
+ejecutarcrearcuenta()
+
+while (iniciar == True) :
+  ejecutar()
+  respuesta = input("¿Deseas realizar otra operación?\nSi o no ")
+  if (respuesta == "s" or respuesta == "si" or respuesta == "S" or respuesta == "SI") :
+    iniciar = True
+  else:
+    iniciar = False
+    print("Gracias por utilizar los servicios...")
